@@ -7,55 +7,50 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using WEB_153503_Kiseleva.API.Data;
 using WEB_153503_Kiseleva.Domain.Entities;
+using WEB_153503_Kiseleva.Services.ProductService;
+using WEB_153503_Kiseleva.Services.CategoryService;
 
 namespace WEB_153503_Kiseleva.Areas.Admin.Pages
 {
     public class DeleteModel : PageModel
     {
-        private readonly WEB_153503_Kiseleva.API.Data.AppDbContext _context;
+        private readonly IProductService _productService;
 
-        public DeleteModel(WEB_153503_Kiseleva.API.Data.AppDbContext context)
+        public DeleteModel(IProductService productService)
         {
-            _context = context;
+            _productService = productService;
         }
 
         [BindProperty]
-      public Book Book { get; set; } = default!;
+        public Book Book { get; set; } = default!;
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
-            if (id == null || _context.Books == null)
+            if (id == null)
             {
                 return NotFound();
             }
 
-            var book = await _context.Books.FirstOrDefaultAsync(m => m.Id == id);
-
-            if (book == null)
+            var response = await _productService.GetProductByIdAsync(id.Value);
+            if (!response.Success)
             {
                 return NotFound();
             }
-            else 
+            else
             {
-                Book = book;
+                Book = response.Data!;
+                return Page();
             }
-            return Page();
         }
 
         public async Task<IActionResult> OnPostAsync(int? id)
         {
-            if (id == null || _context.Books == null)
+            if (id == null)
             {
                 return NotFound();
             }
-            var book = await _context.Books.FindAsync(id);
 
-            if (book != null)
-            {
-                Book = book;
-                _context.Books.Remove(Book);
-                await _context.SaveChangesAsync();
-            }
+            await _productService.DeleteProductAsync(id.Value);
 
             return RedirectToPage("./Index");
         }

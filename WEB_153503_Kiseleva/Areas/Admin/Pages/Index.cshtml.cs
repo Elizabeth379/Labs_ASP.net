@@ -7,26 +7,37 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using WEB_153503_Kiseleva.API.Data;
 using WEB_153503_Kiseleva.Domain.Entities;
+using WEB_153503_Kiseleva.Services.ProductService;
+using WEB_153503_Kiseleva.Services.CategoryService;
 
 namespace WEB_153503_Kiseleva.Areas.Admin.Pages
 {
     public class IndexModel : PageModel
     {
-        private readonly WEB_153503_Kiseleva.API.Data.AppDbContext _context;
-
-        public IndexModel(WEB_153503_Kiseleva.API.Data.AppDbContext context)
+        private readonly IProductService _productService;
+        public IndexModel(IProductService productService)
         {
-            _context = context;
+            _productService = productService;
         }
 
-        public IList<Book> Book { get;set; } = default!;
+        public IList<Book> Books { get; set; } = default!;
+        public int CurrentPage { get; set; }
+        public int TotalPages { get; set; }
 
-        public async Task OnGetAsync()
+        public async Task<IActionResult> OnGetAsync(int pageNo = 1)
         {
-            if (_context.Books != null)
-            {
-                Book = await _context.Books.ToListAsync();
-            }
+            var responce = await _productService.GetProductListAsync(null, pageNo);
+
+            if (!responce.Success)
+                return NotFound(responce.ErrorMessage ?? "");
+
+
+            Books = responce.Data?.Items!;
+            CurrentPage = responce.Data?.CurrentPage ?? 0;
+            CurrentPage = responce.Data?.TotalPages ?? 0;
+
+            return Page();
+
         }
     }
 }

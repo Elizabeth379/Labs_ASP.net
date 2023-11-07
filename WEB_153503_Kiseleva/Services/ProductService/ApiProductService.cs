@@ -28,16 +28,20 @@ namespace WEB_153503_Kiseleva.Services.ProductService
         public async Task<ResponseData<Book>> CreateProductAsync(Book book, IFormFile? formFile)
         {
             var uri = new Uri(_httpClient.BaseAddress.AbsoluteUri + "Books");
-
             var response = await _httpClient.PostAsJsonAsync(
             uri,
             book,
             _serializerOptions);
+
             if (response.IsSuccessStatusCode)
             {
                 var data = await response
                 .Content
                 .ReadFromJsonAsync<ResponseData<Book>>(_serializerOptions);
+                if (formFile != null)
+                {
+                    await SaveImageAsync(data!.Data!.Id, formFile);
+                }
 
                 return data; // dish;
             }
@@ -109,9 +113,34 @@ namespace WEB_153503_Kiseleva.Services.ProductService
             };
         }
 
-        public Task UpdateBookAsync(int id, Book book, IFormFile? formFile)
+        public async Task UpdateProductAsync(int id, Book book, IFormFile? formFile)
         {
-            throw new NotImplementedException();
+            var uri = new Uri(_httpClient.BaseAddress!.AbsoluteUri + "Books/" + id);
+            var response = await _httpClient.PutAsJsonAsync(uri, book, _serializerOptions);
+
+            if (!response.IsSuccessStatusCode)
+            {
+                _logger.LogError($"-----> Данные не получены от сервера. Error: {response.StatusCode}");
+            }
+            else if (formFile != null)
+            {
+                int bookId = (await response.Content.ReadFromJsonAsync<ResponseData<Book>>(_serializerOptions))!.Data!.Id;
+                await SaveImageAsync(bookId, formFile);
+            }
+        }
+
+        private async Task SaveImageAsync(int id, IFormFile image)
+        {
+            var request = new HttpRequestMessage
+            {
+                Method = HttpMethod.Post,
+                RequestUri = new Uri($"{_httpClient.BaseAddress?.AbsoluteUri}Books/{id}")
+            };
+            var content = new MultipartFormDataContent();
+            var streamContent = new StreamContent(image.OpenReadStream());
+            content.Add(streamContent, "formFile", image.FileName);
+            request.Content = content;
+            await _httpClient.SendAsync(request);
         }
     }
 }

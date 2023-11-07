@@ -7,16 +7,18 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using WEB_153503_Kiseleva.API.Data;
 using WEB_153503_Kiseleva.Domain.Entities;
+using WEB_153503_Kiseleva.Services.ProductService;
+using WEB_153503_Kiseleva.Services.CategoryService;
 
 namespace WEB_153503_Kiseleva.Areas.Admin.Pages
 {
     public class CreateModel : PageModel
     {
-        private readonly WEB_153503_Kiseleva.API.Data.AppDbContext _context;
+        private readonly IProductService _productService;
 
-        public CreateModel(WEB_153503_Kiseleva.API.Data.AppDbContext context)
+        public CreateModel(IProductService productService)
         {
-            _context = context;
+            _productService = productService;
         }
 
         public IActionResult OnGet()
@@ -26,18 +28,23 @@ namespace WEB_153503_Kiseleva.Areas.Admin.Pages
 
         [BindProperty]
         public Book Book { get; set; } = default!;
-        
+
+        [BindProperty]
+        public IFormFile Image { get; set; }
 
         // To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD
         public async Task<IActionResult> OnPostAsync()
         {
-          if (!ModelState.IsValid || _context.Books == null || Book == null)
+            if (!ModelState.IsValid)
             {
                 return Page();
             }
 
-            _context.Books.Add(Book);
-            await _context.SaveChangesAsync();
+            var response = await _productService.CreateProductAsync(Book, Image);
+            if (!response.Success)
+            {
+                return Page();
+            }
 
             return RedirectToPage("./Index");
         }

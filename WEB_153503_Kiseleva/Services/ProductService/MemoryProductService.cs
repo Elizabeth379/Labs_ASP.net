@@ -65,5 +65,27 @@ namespace WEB_153503_Kiseleva.Services.ProductService
             };
             return Task.FromResult(result);
         }
+
+        public Task<ResponseData<Book>> CreateProductAsync(Book book, IFormFile? formFile)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task DeleteProductAsync(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<ResponseData<Book>> GetProductByIdAsync(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+
+
+        public Task UpdateProductAsync(int id, Book book, IFormFile? formFile)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

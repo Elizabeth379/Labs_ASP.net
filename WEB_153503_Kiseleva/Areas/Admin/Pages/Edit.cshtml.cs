@@ -8,34 +8,35 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using WEB_153503_Kiseleva.API.Data;
 using WEB_153503_Kiseleva.Domain.Entities;
+using WEB_153503_Kiseleva.Services.CategoryService;
+using WEB_153503_Kiseleva.Services.ProductService;
 
 namespace WEB_153503_Kiseleva.Areas.Admin.Pages
 {
     public class EditModel : PageModel
     {
-        private readonly WEB_153503_Kiseleva.API.Data.AppDbContext _context;
+        private readonly IProductService _productService;
 
-        public EditModel(WEB_153503_Kiseleva.API.Data.AppDbContext context)
+        public EditModel(IProductService productService)
         {
-            _context = context;
+            _productService = productService;
         }
 
         [BindProperty]
         public Book Book { get; set; } = default!;
 
-        public async Task<IActionResult> OnGetAsync(int? id)
-        {
-            if (id == null || _context.Books == null)
-            {
-                return NotFound();
-            }
+        [BindProperty]
+        public IFormFile? Image { get; set; }
 
-            var book =  await _context.Books.FirstOrDefaultAsync(m => m.Id == id);
-            if (book == null)
+        public async Task<IActionResult> OnGetAsync(int id)
+        {
+            var response = await _productService.GetProductByIdAsync(id);
+            if (!response.Success)
             {
                 return NotFound();
             }
-            Book = book;
+            Book = response.Data!;
+
             return Page();
         }
 
@@ -48,30 +49,15 @@ namespace WEB_153503_Kiseleva.Areas.Admin.Pages
                 return Page();
             }
 
-            _context.Attach(Book).State = EntityState.Modified;
-
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!BookExists(Book.Id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
+            await _productService.UpdateProductAsync(Book.Id, Book, Image);
 
             return RedirectToPage("./Index");
         }
 
-        private bool BookExists(int id)
+        private async Task<bool> ProductExists(int id)
         {
-          return (_context.Books?.Any(e => e.Id == id)).GetValueOrDefault();
+            var response = await _productService.GetProductByIdAsync(id);
+            return response.Success;
         }
     }
 }

@@ -7,37 +7,39 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using WEB_153503_Kiseleva.API.Data;
 using WEB_153503_Kiseleva.Domain.Entities;
+using WEB_153503_Kiseleva.Services.ProductService;
+using WEB_153503_Kiseleva.Services.CategoryService;
 
 namespace WEB_153503_Kiseleva.Areas.Admin.Pages
 {
     public class DetailsModel : PageModel
     {
-        private readonly WEB_153503_Kiseleva.API.Data.AppDbContext _context;
+        private readonly IProductService _productService;
 
-        public DetailsModel(WEB_153503_Kiseleva.API.Data.AppDbContext context)
+        public DetailsModel(IProductService productService)
         {
-            _context = context;
+            _productService = productService;
         }
 
-      public Book Book { get; set; } = default!; 
+        public Book Book { get; set; } = default!;
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
-            if (id == null || _context.Books == null)
+            if (id == null)
             {
                 return NotFound();
             }
 
-            var book = await _context.Books.FirstOrDefaultAsync(m => m.Id == id);
-            if (book == null)
+            var response = await _productService.GetProductByIdAsync(id.Value);
+            if (!response.Success)
             {
                 return NotFound();
             }
-            else 
+            else
             {
-                Book = book;
+                Book = response.Data!;
+                return Page();
             }
-            return Page();
         }
     }
 }
