@@ -124,8 +124,8 @@ namespace WEB_153503_Kiseleva.Services.ProductService
             }
             else if (formFile != null)
             {
-                int bookId = (await response.Content.ReadFromJsonAsync<ResponseData<Book>>(_serializerOptions))!.Data!.Id;
-                await SaveImageAsync(bookId, formFile);
+                int gameId = (await response.Content.ReadFromJsonAsync<ResponseData<Book>>(_serializerOptions))!.Data!.Id;
+                await SaveImageAsync(gameId, formFile);
             }
         }
 

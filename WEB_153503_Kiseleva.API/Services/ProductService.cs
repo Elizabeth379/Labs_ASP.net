@@ -12,10 +12,16 @@ namespace WEB_153503_Kiseleva.API.Services
         private readonly AppDbContext _context;
         private readonly IConfiguration _configuration;
 
-        public ProductService(AppDbContext context, IConfiguration configuration)
+        private readonly IWebHostEnvironment _webHostEnvironment;
+        private readonly IHttpContextAccessor _httpContextAccessor;
+
+        public ProductService(AppDbContext context, IConfiguration configuration, IWebHostEnvironment webHostEnvironment, IHttpContextAccessor httpContextAccessor)
         {
             _context = context;
             _configuration = configuration;
+
+            _webHostEnvironment = webHostEnvironment;
+            _httpContextAccessor = httpContextAccessor;
         }
 
         public async Task<ResponseData<Book>> CreateProductAsync(Book book)
@@ -58,7 +64,7 @@ namespace WEB_153503_Kiseleva.API.Services
             {
                 return new()
                 {
-                    ErrorMessage = "Book was not found",
+                    ErrorMessage = "Game was not found",
                     Success = false
                 };
             }
@@ -77,8 +83,8 @@ namespace WEB_153503_Kiseleva.API.Services
             var query = _context.Books.AsQueryable();
             var dataList = new ListModel<Book>();
 
-            query = query.Where(b => categoryNormalizedName == null
-                                || b.Category.NormalizedName.Equals(categoryNormalizedName));
+            query = query.Where(g => categoryNormalizedName == null
+                                || g.Category.NormalizedName.Equals(categoryNormalizedName));
             // количество элементов в списке
             var count = await query.CountAsync();
             if (count == 0)
@@ -113,34 +119,41 @@ namespace WEB_153503_Kiseleva.API.Services
 
         public async Task<ResponseData<string>> SaveImageAsync(int id, IFormFile formFile)
         {
+            var responseData = new ResponseData<string>();
             var book = await _context.Books.FindAsync(id);
             if (book == null)
             {
-                return new ResponseData<string>
+                responseData.Success = false;
+                responseData.ErrorMessage = "No item found";
+                return responseData;
+            }
+            var host = "https://" + _httpContextAccessor.HttpContext?.Request.Host;
+            var imageFolder = Path.Combine(_webHostEnvironment.WebRootPath, "images");
+
+            if (formFile != null)
+            {
+                if (!string.IsNullOrEmpty(book.Image))
                 {
-                    Success = false,
-                    ErrorMessage = "Book was not found"
-                };
+                    var prevImage = Path.GetFileName(book.Image);
+                    var prevImagePath = Path.Combine(imageFolder, prevImage);
+                    if (File.Exists(prevImagePath))
+                    {
+                        File.Delete(prevImagePath);
+                    }
+                }
+                var ext = Path.GetExtension(formFile.FileName);
+                var fName = Path.ChangeExtension(Path.GetRandomFileName(), ext);
+                var filePath = Path.Combine(imageFolder, fName);
+                using (var stream = new FileStream(filePath, FileMode.Create))
+                {
+                    await formFile.CopyToAsync(stream);
+                }
+
+                book.Image = $"{host}/images/{fName}";
+                await _context.SaveChangesAsync();
             }
-
-            string imageRoot = Path.Combine(_configuration["AppUrl"], "Images");
-            string uniqueFileName = Guid.NewGuid().ToString() + "_" + formFile.FileName;
-
-            string imagePath = Path.Combine(imageRoot, uniqueFileName);
-
-            using (var stream = new FileStream(imagePath, FileMode.Create))
-            {
-                await formFile.CopyToAsync(stream);
-            }
-
-            book.Image = imagePath;
-            await _context.SaveChangesAsync();
-
-            return new ResponseData<string>
-            {
-                Data = book.Image,
-                Success = true
-            };
+            responseData.Data = book.Image;
+            return responseData;
         }
 
         public async Task UpdateProductAsync(int id, Book book)

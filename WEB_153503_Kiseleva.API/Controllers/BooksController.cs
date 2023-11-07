@@ -94,6 +94,18 @@ namespace WEB_153503_Kiseleva.API.Controllers
             return NoContent();
         }
 
+        // POST: api/Books/5
+        [HttpPost("{id}")]
+        public async Task<ActionResult<ResponseData<string>>> PostImage(int id, IFormFile formFile)
+        {
+            var response = await _productService.SaveImageAsync(id, formFile);
+            if (response.Success)
+            {
+                return Ok(response);
+            }
+            return NotFound(response);
+        }
+
         private async Task<bool> BookExists(int id)
         {
             return (await _productService.GetProductByIdAsync(id)).Success;
