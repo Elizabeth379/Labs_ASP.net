@@ -30,11 +30,12 @@
             @Html.DisplayFor(model => model.Book.Price)
         </dd>
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Book.Image)
+            Category
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Book.Image)
+            @Html.DisplayFor(model => model.Book.Category!.Name)
         </dd>
+        <img src="@Model.Book.Image" style="height: 250px; width: auto;">
     </dl>
 </div>
 <div>
