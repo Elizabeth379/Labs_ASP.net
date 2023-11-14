@@ -1,34 +1,46 @@
-﻿<!-- Информация пользователя -->
-@await Component.InvokeAsync("Cart")
+﻿﻿@{
+    var userName = User.Claims.FirstOrDefault(
+        c => c.Type.Equals("Name", StringComparison.OrdinalIgnoreCase))?.Value;
+}
 
-<div class="dropdown ms-4 nav-color">
-    <button class="btn btn-secondary dropdown-toggle"
-            type="button" id="dropdownMenuButton"
-            data-bs-toggle="dropdown"
-            aria-expanded="false">
-        User@gmail.com
-        <img src="~/images/1.png" width="30"
-             alt="User" class="rounded nav-color" />
-    </button>
-    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-        <li>
-            <span class="dropdown-item-text">
-                <img src="~/images/1.png"
-                     width="50" alt="User" class="rounded" />
-                user@gmail.com
-            </span>
-        </li>
+@if (User.Identity.IsAuthenticated)
+{
+    @await Component.InvokeAsync("Cart")
 
-        <li><hr class="dropdown-divider"></li>
+    <div class="dropdown ms-4 nav-color">
+        <button class="btn btn-secondary dropdown-toggle"
+                type="button" id="dropdownMenuButton"
+                data-bs-toggle="dropdown"
+                aria-expanded="false">
+            @userName
+            <img src="https://localhost:7003/avatar" width="30"
+                 alt="@userName" class="rounded nav-color" />
+        </button>
+        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+            <li>
+                <span class="dropdown-item-text">
+                    <img src="https://localhost:7003/avatar"
+                         width="100" alt="Avatar" class="rounded" />
+                    user@gmail.com
+                </span>
+            </li>
+            <li><hr class="dropdown-divider" /></li>
+            <li>
+                <form id="logoutForm" class="form-inline" asp-controller="Identity" asp-action="Logout">
+                    <button id="logout" type="submit" class="nav-link btn btn-link text-dark">
+                        Logout
+                    </button>
+                </form>
+            </li>
+        </ul>
+    </div>
 
-        <li>
-            <form id="logoutForm" class="form-inline">
-                <button id="logout" type="submit" asp-controller="Indentity" asp-action="LogOut" class="nav-link
-                                    btn btn-link text-dark">
-                    Logout
-                </button>
-            </form>
-        </li>
-    </ul>
-</div>
-<!-- Информация пользователя - конец -->
+}
+else
+{
+    <form id="loginForm" class="form-inline" asp-controller="Identity" asp-action="Login">
+        <button id="login" type="submit" class="nav-link btn btn-link text-white">
+            Login
+        </button>
+    </form>
+}
