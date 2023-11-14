@@ -1,9 +1,12 @@
 using Duende.IdentityServer;
+using Duende.IdentityServer.AspNetIdentity;
+using Duende.IdentityServer.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Serilog;
 using WEB_153503_Kiseleva.IdentityServer.Data;
 using WEB_153503_Kiseleva.IdentityServer.Models;
+using WEB_153503_Kiseleva.IdentityServer.Services;
 
 namespace WEB_153503_Kiseleva.IdentityServer
 {
@@ -12,13 +15,21 @@ namespace WEB_153503_Kiseleva.IdentityServer
         public static WebApplication ConfigureServices(this WebApplicationBuilder builder)
         {
             builder.Services.AddRazorPages();
+            builder.Services.AddControllers();
 
             builder.Services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-            builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
-                .AddEntityFrameworkStores<ApplicationDbContext>()
-                .AddDefaultTokenProviders();
+            builder.Services.AddIdentity<ApplicationUser, IdentityRole>(opt =>
+            {
+                opt.SignIn.RequireConfirmedAccount = false;
+                opt.Password.RequireNonAlphanumeric = false;
+                opt.Password.RequireLowercase = false;
+                opt.Password.RequireUppercase = false;
+                opt.Password.RequireDigit = false;
+            })
+            .AddEntityFrameworkStores<ApplicationDbContext>()
+            .AddDefaultTokenProviders();
 
             builder.Services
                 .AddIdentityServer(options =>
@@ -34,7 +45,10 @@ namespace WEB_153503_Kiseleva.IdentityServer
                 .AddInMemoryIdentityResources(Config.IdentityResources)
                 .AddInMemoryApiScopes(Config.ApiScopes)
                 .AddInMemoryClients(Config.Clients)
+                // .AddProfileService<ProfileService>()
                 .AddAspNetIdentity<ApplicationUser>();
+
+            builder.Services.AddScoped<IProfileService, ProfileService>();
 
             builder.Services.AddAuthentication()
                 .AddGoogle(options =>
@@ -64,6 +78,8 @@ namespace WEB_153503_Kiseleva.IdentityServer
             app.UseRouting();
             app.UseIdentityServer();
             app.UseAuthorization();
+
+            app.MapControllers();
 
             app.MapRazorPages()
                 .RequireAuthorization();

@@ -3,26 +3,40 @@ using System.Text;
 using WEB_153503_Kiseleva.Domain.Entities;
 using WEB_153503_Kiseleva.Domain.Models;
 using WEB_153503_Kiseleva.Services.ProductService;
+using Microsoft.AspNetCore.Authentication;
+using System.Net.Http.Headers;
 
 namespace WEB_153503_Kiseleva.Services.ProductService
 {
     public class ApiProductService: IProductService
     {
         private readonly HttpClient _httpClient;
+        private readonly HttpContext _httpContext;
         private string _pageSize;
         private readonly JsonSerializerOptions _serializerOptions;
         private readonly ILogger<ApiProductService> _logger;
 
-        public ApiProductService(HttpClient httpClient, IConfiguration configuration,
+        public ApiProductService(HttpClient httpClient, IHttpContextAccessor httpContext, IConfiguration configuration,
                                 ILogger<ApiProductService> logger)
         {
             _httpClient = httpClient;
+            _httpContext = httpContext.HttpContext;
             _pageSize = configuration.GetSection("ItemsPerPage").Value;
             _serializerOptions = new JsonSerializerOptions()
             {
                 PropertyNamingPolicy = JsonNamingPolicy.CamelCase
             };
             _logger = logger;
+
+            SetCurrentJWTTokenAsync();
+        }
+
+        private async Task SetCurrentJWTTokenAsync()
+        {
+            // Получение токена текущего user
+            var token = await _httpContext.GetTokenAsync("access_token");
+            _httpClient.DefaultRequestHeaders.Authorization =
+                new AuthenticationHeaderValue("Bearer", token);
         }
 
         public async Task<ResponseData<Book>> CreateProductAsync(Book book, IFormFile? formFile)

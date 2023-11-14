@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -9,6 +10,7 @@ using WEB_153503_Kiseleva.API.Data;
 using WEB_153503_Kiseleva.API.Services;
 using WEB_153503_Kiseleva.Domain.Entities;
 using WEB_153503_Kiseleva.Domain.Models;
+using static System.Reflection.Metadata.BlobBuilder;
 
 namespace WEB_153503_Kiseleva.API.Controllers
 {
@@ -26,6 +28,7 @@ namespace WEB_153503_Kiseleva.API.Controllers
         // GET: api/Books
         [HttpGet("{pageNo:int}")]
         [HttpGet("{category?}/{pageNo:int?}")]
+
         public async Task<ActionResult<ResponseData<List<Book>>>> GetBooks(string? category, int pageNo = 1, int pageSize = 3)
         {
             return Ok(await _productService.GetProductListAsync(category, pageNo, pageSize));
@@ -41,6 +44,7 @@ namespace WEB_153503_Kiseleva.API.Controllers
 
         // PUT: api/Books/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        [Authorize(Roles = "Admin")]
         [HttpPut("{id}")]
         public async Task<ActionResult<ResponseData<Book>>> PutBook(int id, Book book)
         {
@@ -66,6 +70,7 @@ namespace WEB_153503_Kiseleva.API.Controllers
 
         // POST: api/Books
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         public async Task<ActionResult<ResponseData<Book>>> PostBook(Book book)
         {
@@ -74,6 +79,7 @@ namespace WEB_153503_Kiseleva.API.Controllers
         }
 
         // DELETE: api/Books/5
+        [Authorize(Roles = "Admin")]
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteBook(int id)
         {
@@ -95,6 +101,7 @@ namespace WEB_153503_Kiseleva.API.Controllers
         }
 
         // POST: api/Books/5
+        [Authorize(Roles = "Admin")]
         [HttpPost("{id}")]
         public async Task<ActionResult<ResponseData<string>>> PostImage(int id, IFormFile formFile)
         {
