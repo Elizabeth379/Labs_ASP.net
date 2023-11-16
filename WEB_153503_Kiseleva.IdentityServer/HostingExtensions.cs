@@ -81,8 +81,7 @@ namespace WEB_153503_Kiseleva.IdentityServer
 
             app.MapControllers();
 
-            app.MapRazorPages()
-                .RequireAuthorization();
+            app.MapRazorPages().RequireAuthorization();
 
             return app;
         }
