@@ -1,0 +1,53 @@
+﻿@using WEB_153503_KISELEVA.Domain.Models
+@using WEB_153503_KISELEVA.Domain.Entities
+
+@model ProductListModel<Product>
+
+@{
+    var request = ViewContext.HttpContext.Request;
+    var returnUrl = request.Path + request.QueryString.ToUriComponent();
+}
+
+<div id="partial-content">
+    <div class="row row-cols-1 row-cols-md-3 g-4">
+        @foreach (var item in Model.Items)
+        {
+            <div class="card mb-3 me-2">
+                <img src="@item.Image" class="card-img-top" alt="Image">
+                <div class="card-body d-flex flex-column">
+                    <h5 class="card-title">@item.Name</h5>
+                    <p class="card-text">@item.Description</p>
+                    <div class="text-center mt-auto">
+                        <a asp-controller="cart" asp-action="Add" asp-route-id="@item.Id" asp-route-returnUrl="@returnUrl" class="btn btn-primary text-white">Добавить в корзину <i class="fa-solid fa-cart-shopping"></i></a>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+
+    <nav>
+        <Pager current-page="@Model.CurrentPage" total-pages="@Model.TotalPages" is-admin="false"></Pager>
+    </nav>
+</div>
+
+
+<style>
+    .card {
+        width: 32%;
+    }
+
+    .card-img-top {
+        height: 200px;
+        object-fit: contain;
+    }
+
+    .page-item.active .page-link {
+        background-color: cornflowerblue;
+        border-color: cornflowerblue;
+    }
+
+    .page-link {
+        color: cornflowerblue;
+    }
+</style>
+

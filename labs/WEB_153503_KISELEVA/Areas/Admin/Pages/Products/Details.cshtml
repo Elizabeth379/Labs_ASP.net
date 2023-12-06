@@ -1,0 +1,49 @@
+@page
+@model WEB_153503_KISELEVA.Areas.Admin.Pages.Products.DetailsModel
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Подробности товара</h1>
+
+<div>
+    <hr />
+    <table class="table">
+        <tbody>
+            <tr>
+                <th scope="row">Название</th>
+                <td>@Model.Product.Name</td>
+            </tr>
+            <tr>
+                <th scope="row">Описание</th>
+                <td>@Model.Product.Description</td>
+            </tr>
+            <tr>
+                <th scope="row">Цена</th>
+                <td>@Model.Product.Price</td>
+            </tr>
+            <tr>
+                <th scope="row">Изображение</th>
+                <td>
+                    <img src="@Model.Product.Image" />
+                </td>
+            </tr>
+            <tr>
+                <th scope="row">Категория</th>
+                <td>@Model.Product.CategoryNormalizedName</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+<div>
+    <a class="btn btn-sm btn-outline-dark" asp-page="Index"><i class="fa-solid fa-arrow-left text-white"></i> Вернуться к списку </a>
+</div>
+
+<style>
+
+    td img {
+        height: 200px;
+        object-fit: contain;
+    }
+</style>

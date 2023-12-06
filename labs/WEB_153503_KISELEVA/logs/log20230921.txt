@@ -1,0 +1,7 @@
+2023-09-21 23:27:36.055 +03:00 [INF] ---> request /js/site.js returns 304
+2023-09-21 23:27:35.945 +03:00 [INF] ---> request /WEB_KIRZNER_153502.styles.css returns 404
+2023-09-21 23:27:36.051 +03:00 [INF] ---> request /css/site.css returns 304
+2023-09-21 23:42:12.550 +03:00 [INF] ---> request /WEB_KIRZNER_153502.styles.css returns 404
+2023-09-21 23:47:08.875 +03:00 [INF] ---> request /WEB_KIRZNER_153502.styles.css returns 404
+2023-09-21 23:47:35.999 +03:00 [INF] ---> request /WEB_KIRZNER_153502.styles.css returns 404
+2023-09-21 23:48:23.558 +03:00 [INF] ---> request /WEB_KIRZNER_153502.styles.css returns 404

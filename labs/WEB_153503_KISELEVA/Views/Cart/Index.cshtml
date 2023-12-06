@@ -1,0 +1,27 @@
+﻿@model Cart
+@{
+    ViewBag.Title = "Cart";
+    var request = ViewContext.HttpContext.Request;
+    var returnUrl = request.Path + request.QueryString.ToUriComponent();
+}
+
+<h1>Ваша Корзина @(Model.CartItems.Count == 0 ? " пуста" : ":")</h1>
+<table class="table table-striped">
+    <tbody>
+        @foreach (var cartItem in Model.CartItems)
+        {
+            <tr>
+                <th scope="row">
+                    <img src="@cartItem.Value.Product.Image" height="200"/>
+                </th>
+                <td>@cartItem.Value.Product.Name</td>
+                <td>@cartItem.Value.Product.Description</td>
+                <td>@cartItem.Value.Count</td>
+                <td>
+                <a class="btn btn-danger" asp-controller="cart" asp-action="RemoveItem" asp-route-id="@cartItem.Value.Product.Id" asp-route-redirectUrl="@returnUrl"><i class="fa fa-trash"></i></a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+

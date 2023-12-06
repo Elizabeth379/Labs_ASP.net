@@ -1,0 +1,40 @@
+@using WEB_153503_KISELEVA.Domain.Models
+@using WEB_153503_KISELEVA.Domain.Entities
+
+@model ProductListModel<Product>
+
+@{
+    ViewBag.Title = "Index";
+    var request = ViewContext.HttpContext.Request;
+    var returnUrl = request.Path + request.QueryString.ToUriComponent();
+    var categories = ViewData["categories"] as List<Category>;
+}
+
+<div class="d-flex align-items-center justify-content-start mb-2">
+    <h2>Товары</h2>
+    <div class="dropdown me-2 ml-2 ms-2">
+        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu2" data-bs-toggle="dropdown" aria-expanded="false">
+            @ViewData["currentCategory"]
+        </button>
+        <ul class="dropdown-menu" aria-labelledby="dropdownMenu2">
+            <li>
+                <a class="dropdown-item"
+                   asp-controller="product"
+                   asp-route-category=@null>Все</a>
+            </li>
+            @foreach (var item in categories)
+            {
+                <li><hr class="dropdown-divider"></li>
+                <li>
+                    <a class="dropdown-item"
+                       asp-controller="product"
+                       asp-route-category="@item.NormalizedName">
+                        @item.Name
+                    </a>
+                </li>
+            }
+        </ul>
+    </div>
+</div>
+
+<partial name="_ListPartial"/>

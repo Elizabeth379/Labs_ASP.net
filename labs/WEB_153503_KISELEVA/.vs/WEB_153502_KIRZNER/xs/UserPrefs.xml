@@ -1,0 +1,76 @@
+﻿<Properties StartupConfiguration="Multiple Projects">
+  <MonoDevelop.Ide.ItemProperties.WEB__153502__KIRZNER PreferredExecutionTarget="/Applications/Google Chrome.app" />
+  <MonoDevelop.Ide.ItemProperties.WEB__153502__KIRZNER.API PreferredExecutionTarget="/Applications/Google Chrome.app" />
+  <MonoDevelop.Ide.ItemProperties.WEB__153502__KIRZNER.IdentityServer PreferredExecutionTarget="/Applications/Google Chrome.app" />
+  <MultiItemStartupConfigurations>
+    <MultiItemSolutionRunConfiguration Id="Multiple Projects" Name="Multiple Projects">
+      <Items>
+        <StartupItem ItemId="{7922D490-9BA8-4E36-9ADE-65B7B6094626}" ItemName="WEB_153502_KIRZNER" ConfigurationId="https" />
+        <StartupItem ItemId="{98C21E0E-DDA6-41E9-B0C1-FAD8B6300545}" ItemName="WEB_153502_KIRZNER.API" ConfigurationId="https" />
+        <StartupItem ItemId="{B16E25B7-32E5-4486-8546-7B2DAF1E9804}" ItemName="WEB_153502_KIRZNER.BlazorWasm" ConfigurationId="https" />
+        <StartupItem ItemId="{6753A68E-9562-4DD3-BD85-A2921CD1F1D0}" ItemName="WEB_153502_KIRZNER.IdentityServer" ConfigurationId="SelfHost" />
+      </Items>
+    </MultiItemSolutionRunConfiguration>
+  </MultiItemStartupConfigurations>
+  <MonoDevelop.Ide.Workbench ActiveDocument="../WEB_153502_KIRZNER.BlazorWasm/Pages/Pager.razor">
+    <Files>
+      <File FileName="../WEB_153502_KIRZNER.BlazorWasm/wwwroot/appsettings.json" />
+      <File FileName="../WEB_153502_KIRZNER.BlazorWasm/Services/DataService.cs" Line="135" Column="19" />
+      <File FileName="appsettings.json" />
+      <File FileName="../WEB_153502_KIRZNER.BlazorWasm/Program.cs" Line="14" Column="1" />
+      <File FileName="../WEB_153502_KIRZNER.BlazorWasm/Pages/FetchData.razor" Line="26" Column="1" />
+      <File FileName="../WEB_153502_KIRZNER.BlazorWasm/Pages/CategorySelector.razor" Line="38" Column="6" />
+      <File FileName="../WEB_153502_KIRZNER.BlazorWasm/Pages/ProductsList.razor" Line="30" Column="6" />
+      <File FileName="Views/Product/Index.cshtml" Line="37" Column="11" />
+      <File FileName="../WEB_153502_KIRZNER.BlazorWasm/wwwroot/index.html" Line="31" Column="55" />
+      <File FileName="../WEB_153502_KIRZNER.BlazorWasm/Pages/Pager.razor" Line="22" Column="8" />
+      <File FileName="Views/Shared/_ListPartial.cshtml" Line="1" Column="1" />
+    </Files>
+    <Pads>
+      <Pad Id="ProjectPad">
+        <State name="__root__">
+          <Node name="WEB_153502_KIRZNER">
+            <Node name="WEB_153502_KIRZNER">
+              <Node name="Views" expanded="True">
+                <Node name="Product" expanded="True" />
+                <Node name="Shared" expanded="True" />
+              </Node>
+              <Node name="wwwroot" expanded="True">
+                <Node name="lib" expanded="True">
+                  <Node name="bootstrap" expanded="True">
+                    <Node name="dist" expanded="True">
+                      <Node name="js" expanded="True">
+                        <Node name="bootstrap.js" expanded="True">
+                          <Node name="bootstrap.bundle.js" expanded="True" />
+                        </Node>
+                        <Node name="bootstrap.esm.js" expanded="True" />
+                      </Node>
+                    </Node>
+                  </Node>
+                </Node>
+              </Node>
+            </Node>
+            <Node name="WEB_153502_KIRZNER.BlazorWasm" expanded="True">
+              <Node name="Pages" expanded="True" />
+              <Node name="Services" expanded="True" />
+              <Node name="wwwroot" expanded="True">
+                <Node name="css" expanded="True">
+                  <Node name="bootstrap" expanded="True" />
+                </Node>
+              </Node>
+            </Node>
+            <Node name="WEB_153502_KIRZNER.Domain" expanded="True" />
+          </Node>
+        </State>
+      </Pad>
+    </Pads>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.ItemProperties.WEB__153502__KIRZNER.BlazorWasm PreferredExecutionTarget="/System/Volumes/Preboot/Cryptexes/App/System/Applications/Safari.app" />
+  <MonoDevelop.Ide.ItemProperties.blazor.Server FirstBuild="True" PreferredExecutionTarget="/System/Volumes/Preboot/Cryptexes/App/System/Applications/Safari.app" />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MonoDevelop.Ide.ItemProperties.blazor.Client FirstBuild="True" />
+</Properties>

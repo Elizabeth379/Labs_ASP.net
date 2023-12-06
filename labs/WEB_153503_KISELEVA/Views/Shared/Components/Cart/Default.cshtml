@@ -1,0 +1,7 @@
+﻿@using WEB_153503_KISELEVA.Domain.Entities
+@model Cart
+
+<a class="navbar-text ms-auto" asp-controller="cart" asp-action="Index">
+    @Math.Round(@Model.TotalPrice, 2) руб <i class="fa-solid fa-cart-shopping"></i> (@Model.Count)
+</a>
+

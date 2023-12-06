@@ -1,0 +1,72 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net7.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <PropertyGroup Condition=" '$(RunConfiguration)' == 'https' " />
+  <ItemGroup>
+    <None Remove="Controllers\" />
+    <None Remove="Views\Home\" />
+    <None Remove="Views\Shared\Components\" />
+    <None Remove="Views\Shared\Components\Cart\" />
+    <None Remove="ViewComponents\" />
+    <None Remove="Services\" />
+    <None Remove="Services\CategoryService\" />
+    <None Remove="Services\ProductService\" />
+    <None Remove="Views\Product\" />
+    <None Remove="Helpers\" />
+    <None Remove="Areas\" />
+    <None Remove="Areas\Admin\" />
+    <None Remove="Areas\Admin\Pages\" />
+    <None Remove="Areas\Admin\Pages\Products\" />
+    <None Remove="TagHelpers\" />
+    <None Remove="Extensions\" />
+    <None Remove="Services\CartService\" />
+    <None Remove="Views\Cart\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Controllers\" />
+    <Folder Include="Views\Home\" />
+    <Folder Include="wwwroot\Images\" />
+    <Folder Include="Views\Shared\Components\" />
+    <Folder Include="Views\Shared\Components\Cart\" />
+    <Folder Include="ViewComponents\" />
+    <Folder Include="Services\" />
+    <Folder Include="Services\CategoryService\" />
+    <Folder Include="Services\ProductService\" />
+    <Folder Include="Views\Product\" />
+    <Folder Include="Helpers\" />
+    <Folder Include="Areas\" />
+    <Folder Include="Areas\Admin\" />
+    <Folder Include="Areas\Admin\Pages\" />
+    <Folder Include="Areas\Admin\Pages\Products\" />
+    <Folder Include="TagHelpers\" />
+    <Folder Include="Extensions\" />
+    <Folder Include="Services\CartService\" />
+    <Folder Include="Views\Cart\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Remove="wwwroot\Images\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\WEB_153503_KISELEVA.Domain\WEB_153503_KISELEVA.Domain.csproj">
+      <GlobalPropertiesToRemove></GlobalPropertiesToRemove>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="7.0.9" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="7.0.10" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="7.0.10">
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="7.0.10" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.OpenIdConnect" Version="7.0.10" />
+    <PackageReference Include="Serilog.AspNetCore" Version="7.0.0" />
+    <PackageReference Include="Serilog.Sinks.Console" Version="4.1.0" />
+    <PackageReference Include="Serilog.Sinks.File" Version="5.0.0" />
+  </ItemGroup>
+</Project>

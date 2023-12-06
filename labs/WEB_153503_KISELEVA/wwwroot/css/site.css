@@ -1,0 +1,19 @@
+﻿html {
+    height: 100%;
+    margin: 0;
+}
+
+body {
+    display: flex;
+    height: 100%;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+header, footer {
+    background-color: rgba(var(--bs-dark-rgb));
+}
+
+.nav-color {
+    color: rgba(255, 255, 255, 0.5)
+}

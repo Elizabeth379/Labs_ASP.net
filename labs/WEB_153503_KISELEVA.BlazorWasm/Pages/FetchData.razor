@@ -1,0 +1,53 @@
+﻿@using Microsoft.AspNetCore.Authorization
+@using WEB_153503_KISELEVA.BlazorWasm.Pages
+@using WEB_153503_KISELEVA.Domain.Entities
+
+@page "/fetchdata"
+@page "/fetchdata/{category}"
+
+@attribute [Authorize]
+
+@inject HttpClient Http
+@inject IDataService dataService
+
+
+<PageTitle>Products</PageTitle>
+
+<CategorySelector SelectedCategory="@SelectedName" />
+
+<ProductsList onButtonClicked="@FindProduct"/>
+
+<Pager Category="@Category" />
+
+<ProductDetail SelectedProduct="@SelectedProduct"/>
+
+@code {
+    [Inject]
+    public IDataService DataService { get; set; }
+
+    [Parameter]
+    public string Category { get; set; }
+
+    public string SelectedName { get; set; }
+
+    public Product? SelectedProduct { get; set; }
+
+    protected override async Task OnParametersSetAsync()
+    {
+        await DataService.GetProductListAsync(Category);
+        await DataService.GetCategoryListAsync();
+        if (Category != null)
+            SelectedName = DataService
+            .Categories
+            .FirstOrDefault(c =>
+            c.NormalizedName.Equals(Category))
+            .Name;
+        else SelectedName = "Все";
+    }
+
+    public async void FindProduct(int id)
+    {
+        SelectedProduct = DataService.ObjectsList.First(product => product.Id == id);
+        await InvokeAsync(StateHasChanged);
+    }
+}
