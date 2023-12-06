@@ -8,11 +8,11 @@ namespace WEB_153503_KISELEVA.Services.CategoryService
 	{
         private List<Category> _categories = new List<Category>
         {
-                new Category{Id = 1, Name = "Игрушки", NormalizedName = "toys"},
-                new Category{Id = 2, Name = "Лекарства", NormalizedName = "medicines"},
-                new Category{Id = 3, Name = "Одежда", NormalizedName = "clothes"},
-                new Category{Id = 4, Name = "Еда", NormalizedName = "food"},
-                new Category{Id = 5, Name = "Ошейники", NormalizedName = "collars"},
+                new Category{Id = 1, Name = "Фэнтези", NormalizedName = "fantasy"},
+                new Category{Id = 2, Name = "Научная фантастика", NormalizedName = "science_fiction"},
+                new Category{Id = 3, Name = "Одежда", NormalizedName = "novel"},
+                new Category{Id = 4, Name = "Сказка", NormalizedName = "fairy_tale"},
+                new Category{Id = 5, Name = "Поэзия", NormalizedName = "poetry"},
         };
 
         public Task<ResponseData<List<Category>>> GetCategoryListAsync()

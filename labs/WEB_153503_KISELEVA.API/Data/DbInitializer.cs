@@ -20,16 +20,16 @@ namespace WEB_153503_KISELEVA.API.Data
 
                 var products = new List<Product>
             {
-                new Product{Name = "Мячик Теннисный", Description = "Способствует развитию физической активности и челюстной мускулатуры", Price = 7.10, Image = imageUrlBase + "ТеннисныйМяч.jpeg", CategoryNormalizedName = "toys"},
-                new Product{Name = "Плюшевый Мишка", Description = "Мягкая игрушка для собак в виде забавного медвежонка.", Price = 10.0, Image = imageUrlBase + "ПлюшевыйМишка.jpeg", CategoryNormalizedName = "toys" },
-                new Product{Name = "Кормовая добавка", Description = "Предназначена для нормализации обмена веществ и поддержания иммунитета у собак", Price = 9.0, Image = imageUrlBase + "ТаблеткиКруглые.jpeg", CategoryNormalizedName = "medicines"},
-                new Product{Name = "Пребиотик", Description = "Восстанавливает полезную микрофлору кишечника и укрепляет иммунитет", Price = 15.60, Image = imageUrlBase + "ТаблеткиОвальные.jpeg", CategoryNormalizedName = "medicines"},
-                new Product{Name = "Плащ жёлтый", Description = "Удобный и функциональный аксессуар для собак, который просто незаменим в дождливую погоду", Price = 33.70, Image = imageUrlBase + "ПлащЖёлтый.jpeg", CategoryNormalizedName = "clothes"},
-                new Product{Name = "Свитер розовый", Description = "Тёплый, удобный и функциональный аксессуар для собак, который просто незаменим в холодную погоду", Price = 28.70, Image = imageUrlBase + "СвитерВязаныйРозовый.jpeg", CategoryNormalizedName = "clothes"},
-                new Product{Name = "Косточка из оленины", Description = "Косточка для чистки зубов из оленины", Price = 6.60, Image = imageUrlBase + "Косточка.jpeg", CategoryNormalizedName = "food"},
-                new Product{Name = "Сухой корм для взрослых собак всех пород", Description = "Cодержит все белки, необходимые для развития мышц и тканей", Price = 185.20, Image = imageUrlBase + "КормРазноцветный.jpeg", CategoryNormalizedName = "food"},
-                new Product{Name = "Ошейник голубой с подвеской", Description = "Надежный помощник в выгуле собак, регулируемый", Price = 12.20, Image = imageUrlBase + "ОшейникГолубойСПодвеской.jpeg", CategoryNormalizedName = "collars"},
-                new Product{Name = "Ошейник зелёный с подвеской", Description = "Надежный помощник в выгуле собак, регулируемый", Price = 12.20, Image = imageUrlBase + "ОшейникЗелёныйСПодвеской.jpeg", CategoryNormalizedName = "collars"},
+                new Product{Name = "Ведьмак", Description = "Фэнтезийная книга с интересным волшебным миром, населенном разумными расами и монстрами", Price = 7.10, Image = imageUrlBase + "ТеннисныйМяч.jpeg", CategoryNormalizedName = "fantasy"},
+                new Product{Name = "Путь меча", Description = "Меч и его человек.", Price = 10.0, Image = imageUrlBase + "ПлюшевыйМишка.jpeg", CategoryNormalizedName = "fantasy" },
+                new Product{Name = "Лабиринт отражений", Description = "Книга о виртуальной реальности, в которую постепенно переходит человечество", Price = 9.0, Image = imageUrlBase + "ТаблеткиКруглые.jpeg", CategoryNormalizedName = "science_fiction"},
+                new Product{Name = "Дюна", Description = "В центре повествования пустынная планета Арракис", Price = 15.60, Image = imageUrlBase + "ТаблеткиОвальные.jpeg", CategoryNormalizedName = "science_fiction"},
+                new Product{Name = "Мастер и Маргарита", Description = "Роман о жизни и любви", Price = 33.70, Image = imageUrlBase + "ПлащЖёлтый.jpeg", CategoryNormalizedName = "novel"},
+                new Product{Name = "Благословение небожителей", Description = "Фэнтезийный роман основанный на мифологии Китая", Price = 28.70, Image = imageUrlBase + "СвитерВязаныйРозовый.jpeg", CategoryNormalizedName = "novel"},
+                new Product{Name = "Простоквашино", Description = "Детская сказка о самостоятельном мальчике и его питомцах", Price = 6.60, Image = imageUrlBase + "Косточка.jpeg", CategoryNormalizedName = "fairy_tale"},
+                new Product{Name = "Сказки братьев Гримм", Description = "Сборник известных детских сказок братьев Гримм", Price = 185.20, Image = imageUrlBase + "КормРазноцветный.jpeg", CategoryNormalizedName = "fairy_tale"},
+                new Product{Name = "Бородино", Description = "Поэма о войне 1812 года", Price = 12.20, Image = imageUrlBase + "ОшейникГолубойСПодвеской.jpeg", CategoryNormalizedName = "poetry"},
+                new Product{Name = "Руслан и Людмила", Description = "Поэма Пушкина", Price = 12.20, Image = imageUrlBase + "ОшейникЗелёныйСПодвеской.jpeg", CategoryNormalizedName = "poetry"},
             };
 
                 context.Products.AddRange(products);
@@ -40,11 +40,11 @@ namespace WEB_153503_KISELEVA.API.Data
             {
                 var categories = new List<Category>
                 {
-                new Category{Name = "Игрушки", NormalizedName = "toys"},
-                new Category{Name = "Лекарства", NormalizedName = "medicines"},
-                new Category{Name = "Одежда", NormalizedName = "clothes"},
-                new Category{Name = "Еда", NormalizedName = "food"},
-                new Category{Name = "Ошейники", NormalizedName = "collars"},
+                new Category{Name = "Фэнтези", NormalizedName = "fantasy"},
+                new Category{Name = "Научная фантастика", NormalizedName = "science_fiction"},
+                new Category{Name = "Роман", NormalizedName = "novel"},
+                new Category{Name = "Сказка", NormalizedName = "fairy_tale"},
+                new Category{Name = "Поэзия", NormalizedName = "poetry"},
                 };
 
                 context.Categories.AddRange(categories);
